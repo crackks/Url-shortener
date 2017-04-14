@@ -1,0 +1,16 @@
+{
+  "name": "url_shortenet",
+  "version": "1.0.0",
+  "description": "url shortener",
+  "main": "server.js",
+  "scripts": {
+    "test": "server.js",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "url",
+    "shortener"
+  ],
+  "author": "Paul-Emile Chantrel",
+  "license": "ISC"
+}
