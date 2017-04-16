@@ -1,0 +1,76 @@
+<html>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet">
+    <style>
+        body {
+            background-color:rgb(255,255,255);
+            color:rgb(50,50,50);
+        }
+        h1 {
+            font-family:Merriweather, serif;
+            margin-top:40px;
+        }
+        .box{
+            background-color:rgb(100,100,100);
+            color: rgb(250,250,250);
+            padding:10px 0px 0px 20px;
+            width:50%;
+            height:70%;
+            border-radius:5px;
+            margin:30px auto 0px auto;
+            box-shadow: 3px 3px 10px rgb(50,50,50);
+        }
+        .box2{
+            background-color:rgb(50,50,50);
+            color:rgb(255,255,255);
+            width:90%;
+            border-radius:5px;
+            margin-left:20px;
+            padding:5px 5px 5px 5px;
+            border-width:1px;
+            border-style:solid;
+            border-color:rgb(70,70,70);
+        }
+         a{
+            background-color:rgb(50,50,50);
+            color:rgb(255,255,255);
+            border-radius:5px;
+            margin-left:20px;
+            padding:10px 10px 10px 15px;
+            border-width:1px;
+            border-style:solid;
+            border-color:rgb(70,70,70);
+        }
+        a:hover{color:rgb(255,255,255);}
+        h2{margin:20px 10px 20px 10px;}
+        p{
+            margin: 0px 20px 4px 30px;
+        }
+        .Footer{
+            font-size:15px;
+            font-family:Merriweather, serif;
+            margin:50px auto 0px auto;
+        }
+        
+    </style>
+    
+    <body>
+        <h1 class='text-center'>URL Shortener Microservice</h1>
+        <div class= 'box'>
+            <h2>Example of usage:</h2>
+            <div class="box2">
+            <p>https://learnyoumongo-crkx35.c9users.io/https://www.google.com</p>
+            <p>https://learnyoumongo-crkx35.c9users.io/http://codepen.io/crx/</p>
+            </div>
+            <h2>Example output:</h2>
+            <div class="box2">
+            <p>{"short_url":"http://learnyoumongo-crkx35.c9users.io","original_url":"https://www.google.com"}</p>
+            </div>
+            <h2>Usage:</h2>
+            <a href='https://www.google.com'>https://ide.c9.io/crkx35/learnyoumongo</a>
+            <h2>Will redirect you to:</h2>
+            <a href='https://www.google.com'>https://www.google.com</a>
+        </div>
+        <div><p class='text-center Footer'>Created by Paul-Emile Chantrel<p></div>
+    </body>
+</html>

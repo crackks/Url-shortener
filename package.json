@@ -12,5 +12,11 @@
     "shortener"
   ],
   "author": "Paul-Emile Chantrel",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "crypto": "0.0.3",
+    "ejs": "^2.5.6",
+    "express": "^4.15.2",
+    "mangodb": "^1.0.0"
+  }
 }
