@@ -21,9 +21,37 @@ app.get("/showMeAll",function(req, res) {
                 res.send('Oups, Something went wrong');
             }
             res.send(JSON.stringify(data));
+            db.close();
         })
     })
 })
+
+
+
+app.get('/:short', function(req,res){
+    mongo.connect(urlMongo,function(err,db){
+        if (err){
+            res.send("Could not connect to the database: ",err)
+        }
+        var urlData=db.collection('UrlData');
+        urlData.find({_id:req.params.short}).toArray(function(err,data){
+            console.log(data[0])
+            if (err){
+                res.send('Could not find the data',err)
+            }
+            if (data[0]==undefined){
+                res.render('notInDb.html');
+                db.close();
+            }
+            else{res.redirect(data[0].original_url);
+                db.close();
+            }
+            
+            
+        })
+    })
+})
+
 app.get('/:url(*)',function (req, res) {
     if (isValidUrl(req.params.url)){
         mongo.connect(urlMongo,function(err,db){
@@ -31,23 +59,23 @@ app.get('/:url(*)',function (req, res) {
                 res.send('Sorry we are temporarily not available');
             }
             var urlData=db.collection('UrlData');
-            var id=hash.createHash('sha1').update(req.params.url).digest('hex');
+            var id=hash.createHash('sha1').update(req.params.url).digest('hex').slice(0,5);
             urlData.find({_id:id}).toArray(function(err,doc){
                 if (err){
                     res.send('Sorry we are temporarily not available');
                 }
                 if (doc[0]==undefined){
-                    var docUrl=jsonUrl(req.protocol + '://' + req.get('host') + req.originalUrl,req.params.url,id);
+                    var docUrl=jsonUrl(req.protocol + '://' + req.get('host') + req.originalUrl,req.params.url,id,false);
                     urlData.insert(docUrl,function(err,data){
                         if (err){
                             res.send('Sorry we are temporarily not available');
                         }
-                        res.send(jsonUrl(req.protocol + '://' + req.get('host') + req.originalUrl,req.params.url));
+                        res.json(jsonUrl(req.protocol + '://' + req.get('host') + req.originalUrl,req.params.url,id,true));
                         db.close();
                     });
                 }
                 else{
-                    res.send({short_url:doc[0].short_url,original_url:doc[0].original_url});
+                    res.json({short_url:doc[0].short_url,original_url:doc[0].original_url});
                     db.close();
                 }
             });
@@ -55,11 +83,9 @@ app.get('/:url(*)',function (req, res) {
     }
     
     else{
-        res.send({error:'invalid Url'})
+        res.json({error:'invalid Url'})
     }
 });
-
-
 
 
 app.listen(8080);
@@ -67,13 +93,14 @@ app.listen(8080);
 
 
 
-function jsonUrl(url1,url2,id){
+function jsonUrl(url1,url2,id,noId){
     url1=url1.slice(0,url1.length-url2.length-1);
-    if(id){
-        return {_id:id,short_url:url1,original_url:url2};
+    if (noId){
+        return {short_url:url1+'/'+id,original_url:url2};
     }
-    else {
-    return {short_url:url1,original_url:url2};}
+    else{
+    return {_id:id,short_url:url1+'/'+id,original_url:url2};
+    }
 }
 
 function isValidUrl (url){
